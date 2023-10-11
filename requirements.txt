@@ -1,5 +1,7 @@
 numpy
 pandas
+openpyxl
+altair
 streamlit
-PIL
-
+json
+bs4
