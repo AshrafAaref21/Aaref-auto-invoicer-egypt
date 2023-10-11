@@ -104,7 +104,7 @@ if s_p == 'Procurements':
 
         btn = st.download_button(
             "Press to Download",
-            df.to_csv(index=False).encode('utf-8').decode('utf-8'),
+            df.to_excel(sheet_name='Aaref', index=False, encoding="utf-8"),
             "Aaref.csv",
             "text/csv",
             key='download-csv')
@@ -179,7 +179,7 @@ elif s_p == 'Sales':
 
         btn = st.download_button(
             "Press to Download",
-            df.to_csv(index=False).encode('utf-8').decode('utf-8'),
+            df.to_excel(sheet_name='Aaref', index=False, encoding="utf-8"),
             "Aaref.csv",
             "text/csv",
             key='download-csv')
