@@ -192,12 +192,15 @@ elif s_p == 'Sales':
 
         df = pd.DataFrame.from_records(ls)
 
-        btn = st.download_button(
-            "Press to Download",
-            df.to_csv(index=False).encode("utf-8"),
-            "Aaref.csv",
-            "text/csv",
-            key='download-csv')
+        df_xlsx = to_excel(df)
+        st.download_button(label='📥 Download Current Result',
+                                data=df_xlsx ,
+                                file_name= 'df_test.xlsx')
+        
+
+
+
+
         
 
 
