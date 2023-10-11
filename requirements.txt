@@ -6,3 +6,4 @@ streamlit
 bs4
 pyxlsb==1.0.9
 pyxlsb
+XlsxWriter
