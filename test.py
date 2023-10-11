@@ -31,7 +31,6 @@ if s_p == 'Procurements':
     uploaded_files = st.file_uploader('Upload your Invoices (Accept Json Formating Only)',
                                     type='json',
                                     accept_multiple_files= True,
-                                    encoding= 'windows-1256',
                                      )
 
 
@@ -118,7 +117,6 @@ elif s_p == 'Sales':
     uploaded_files = st.file_uploader('Upload your Invoices (Accept Json Formating Only)',
                                     type='json',
                                     accept_multiple_files= True,
-                                    encoding= 'windows-1256',
                                      )
 
 
