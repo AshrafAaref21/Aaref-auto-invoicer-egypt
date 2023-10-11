@@ -4,3 +4,4 @@ openpyxl
 altair
 streamlit
 bs4
+pyxlsb==1.0.9
