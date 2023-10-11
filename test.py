@@ -122,7 +122,7 @@ if s_p == 'Procurements':
         #     "Aaref.csv",
         #     "text/csv",
         #     key='download-csv')
-        
+        st.divider()
         df_xlsx = to_excel(df)
         st.download_button(label='📥 Download Current Result',
                                 data=df_xlsx ,
@@ -191,7 +191,7 @@ elif s_p == 'Sales':
 
 
         df = pd.DataFrame.from_records(ls)
-
+        st.divider()
         df_xlsx = to_excel(df)
         st.download_button(label='📥 Download Current Result',
                                 data=df_xlsx ,
