@@ -104,7 +104,7 @@ if s_p == 'Procurements':
 
         btn = st.download_button(
             "Press to Download",
-            df.to_csv(index=False).encode('cp1252').decode('cp1256'),
+            df.to_csv(index=False).encode('windows-1256').decode('windows-1256'),
             "Aaref.csv",
             "text/csv",
             key='download-csv')
@@ -179,7 +179,7 @@ elif s_p == 'Sales':
 
         btn = st.download_button(
             "Press to Download",
-            df.to_csv(index=False).encode('cp1252').decode('cp1256'),
+            df.to_csv(index=False).encode('windows-1256').decode('windows-1256'),
             "Aaref.csv",
             "text/csv",
             key='download-csv')
