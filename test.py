@@ -49,30 +49,28 @@ if s_p == 'Procurements':
 
 
 
-
     if uploaded_files is not None:
-        
+
         ls = []
-        dic = {
-                'Reciever ID': None,#data['receiverId'],
-                'Internal ID': None,#data['internalId'],
-                'Reciever Name': None,#u"{}".format(str(data['receiverName'])),
-                'DateTime Issued': None,#data['dateTimeIssued'][:10] ,
-                'DateTime Received': None,#data['dateTimeReceived'][:10],
-                'Total Sales (EGP)': None,#data['totalSales'],
-                'Total discount (EGP)': None,#data['totalDiscount'],
-                'Total Items Discount (EGP)': None,#float(doc_data.html.body.document.totaldiscountamount.text),
-                'Value added tax (EGP)': None,#float(doc_data.html.body.document.find_all('taxableitems')[-1].amount.text),
-                'Extra Invoice Discounts (EGP)': None,#float(doc_data.html.body.document.extradiscountamount.text),
-                'Total Amount (EGP)': None,#data['total'],
 
 
-        }
-        for uploaded_file in uploaded_files:
-            bytes_data = uploaded_file.read()
-            # st.write("filename:", uploaded_file.name)
-            # st.write(bytes_data)
-            # f = open(bytes_data,encoding='utf-8')
+        for i in range(len(uploaded_files)):
+
+            dic = {
+                    'Reciever ID': None,#data['receiverId'],
+                    'Internal ID': None,#data['internalId'],
+                    'Reciever Name': None,#u"{}".format(str(data['receiverName'])),
+                    'DateTime Issued': None,#data['dateTimeIssued'][:10] ,
+                    'DateTime Received': None,#data['dateTimeReceived'][:10],
+                    'Total Sales (EGP)': None,#data['totalSales'],
+                    'Total discount (EGP)': None,#data['totalDiscount'],
+                    'Total Items Discount (EGP)': None,#float(doc_data.html.body.document.totaldiscountamount.text),
+                    'Value added tax (EGP)': None,#float(doc_data.html.body.document.find_all('taxableitems')[-1].amount.text),
+                    'Extra Invoice Discounts (EGP)': None,#float(doc_data.html.body.document.extradiscountamount.text),
+                    'Total Amount (EGP)': None,#data['total'],
+            }
+            
+            bytes_data = uploaded_files[i].read()
             data = json.loads(bytes_data)
 
             dic['Reciever ID'] = data['receiverId']
@@ -91,10 +89,8 @@ if s_p == 'Procurements':
                 dic['Total Items Discount (EGP)'] = float(doc_data.html.body.document.totaldiscountamount.text)
                 dic['Value added tax (EGP)'] = float(doc_data.html.body.document.find_all('taxableitems')[-1].amount.text)
                 dic['Extra Invoice Discounts (EGP)'] = float(doc_data.html.body.document.extradiscountamount.text)
-                dic['Total Amount (EGP)'] = data['total']
     
-                
-
+            
 
             except:
                 doc_data = json.loads(str(BeautifulSoup(data['document'], 'html.parser')))
@@ -104,30 +100,22 @@ if s_p == 'Procurements':
 
                 try:
                     dic['Value added tax (EGP)'] = doc_data['taxTotals'][0]['amount']
-
                 except IndexError:
                     dic['Value added tax (EGP)'] = 0
                 # st.write(doc_data)
+                
 
-            
-
-            ls.append(dic)
+            ls = ls + [dic]
 
 
-        df = pd.DataFrame.from_records(ls)
-
-        # btn = st.download_button(
-        #     "Press to Download",
-        #     df.to_csv(index=False,encoding="windows-1256"),
-        #     "Aaref.csv",
-        #     "text/csv",
-        #     key='download-csv')
+        df = pd.DataFrame.from_dict(ls, orient='columns')
+        
         st.divider()
         df_xlsx = to_excel(df)
         st.download_button(label='📥 Download Current Result',
-                           data=df_xlsx ,
-                           file_name= 'df_test.xlsx',
-                           type="primary")
+                                data=df_xlsx ,
+                                file_name= r'EL Aaref.xlsx',
+                                type="primary")
 
 elif s_p == 'Sales':
         
@@ -141,26 +129,23 @@ elif s_p == 'Sales':
     if uploaded_files is not None:
         
         ls = []
-        dic = {
-                'Reciever ID': None,#data['receiverId'],
-                'Internal ID': None,#data['internalId'],
-                'Reciever Name': None,#u"{}".format(str(data['receiverName'])),
-                'DateTime Issued': None,#data['dateTimeIssued'][:10] ,
-                'DateTime Received': None,#data['dateTimeReceived'][:10],
-                'Total Sales (EGP)': None,#data['totalSales'],
-                'Total discount (EGP)': None,#data['totalDiscount'],
-                'Total Items Discount (EGP)': None,#float(doc_data.html.body.document.totaldiscountamount.text),
-                'Value added tax (EGP)': None,#float(doc_data.html.body.document.find_all('taxableitems')[-1].amount.text),
-                'Extra Invoice Discounts (EGP)': None,#float(doc_data.html.body.document.extradiscountamount.text),
-                'Total Amount (EGP)': None,#data['total'],
 
-
-        }
         for uploaded_file in uploaded_files:
+            dic = {
+                    'Reciever ID': None,#data['receiverId'],
+                    'Internal ID': None,#data['internalId'],
+                    'Reciever Name': None,#u"{}".format(str(data['receiverName'])),
+                    'DateTime Issued': None,#data['dateTimeIssued'][:10] ,
+                    'DateTime Received': None,#data['dateTimeReceived'][:10],
+                    'Total Sales (EGP)': None,#data['totalSales'],
+                    'Total discount (EGP)': None,#data['totalDiscount'],
+                    'Total Items Discount (EGP)': None,#float(doc_data.html.body.document.totaldiscountamount.text),
+                    'Value added tax (EGP)': None,#float(doc_data.html.body.document.find_all('taxableitems')[-1].amount.text),
+                    'Extra Invoice Discounts (EGP)': None,#float(doc_data.html.body.document.extradiscountamount.text),
+                    'Total Amount (EGP)': None,#data['total'],
+            }
+
             bytes_data = uploaded_file.read()
-            # st.write("filename:", uploaded_file.name)
-            # st.write(bytes_data)
-            # f = open(bytes_data,encoding='utf-8')
             data = json.loads(bytes_data)
 
             dic['Reciever ID'] = data['receiverId']
@@ -192,17 +177,12 @@ elif s_p == 'Sales':
 
 
         df = pd.DataFrame.from_records(ls)
+
+
         st.divider()
         df_xlsx = to_excel(df)
         st.download_button(label='📥 Download Current Result',
-                           data=df_xlsx ,
-                           file_name= 'df_test.xlsx',
-                           type="primary")
-        
-
-
-
+                                data=df_xlsx ,
+                                file_name= r'EL Aaref.xlsx')
 
         
-
-
