@@ -2,11 +2,10 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 from PIL import Image
-import os
-import glob
 import json
-import os
 from bs4 import BeautifulSoup
+from io import BytesIO
+from pyxlsb import open_workbook as open_xlsb
 
 
 img = Image.open("aaref.jpg")
@@ -26,12 +25,27 @@ st.divider()
 s_p = st.selectbox('Select Invoices Type',['Procurements', 'Sales'])
 st.divider()
 
+
+def to_excel(df):
+    output = BytesIO()
+    writer = pd.ExcelWriter(output, engine='xlsxwriter')
+    df.to_excel(writer, index=False, sheet_name='Sheet1')
+    workbook = writer.book
+    worksheet = writer.sheets['Sheet1']
+    format1 = workbook.add_format({'num_format': '0.00'}) 
+    worksheet.set_column('A:A', None, format1)  
+    writer.close()
+    processed_data = output.getvalue()
+    return processed_data
+
+
+
+
 if s_p == 'Procurements':
         
     uploaded_files = st.file_uploader('Upload your Invoices (Accept Json Formating Only)',
                                     type='json',
-                                    accept_multiple_files= True,
-                                     )
+                                    accept_multiple_files= True)
 
 
 
@@ -102,22 +116,23 @@ if s_p == 'Procurements':
 
         df = pd.DataFrame.from_records(ls)
 
-        btn = st.download_button(
-            "Press to Download",
-            df.to_excel(sheet_name='Aaref', index=False),
-            "Aaref.xlsx",
-            "xlsx/text/csv",
-            key='download-csv')
+        # btn = st.download_button(
+        #     "Press to Download",
+        #     df.to_csv(index=False,encoding="windows-1256"),
+        #     "Aaref.csv",
+        #     "text/csv",
+        #     key='download-csv')
         
-
-
+        df_xlsx = to_excel(df)
+        st.download_button(label='📥 Download Current Result',
+                                data=df_xlsx ,
+                                file_name= 'df_test.xlsx')
 
 elif s_p == 'Sales':
         
     uploaded_files = st.file_uploader('Upload your Invoices (Accept Json Formating Only)',
                                     type='json',
-                                    accept_multiple_files= True,
-                                     )
+                                    accept_multiple_files= True)
 
 
 
@@ -179,15 +194,10 @@ elif s_p == 'Sales':
 
         btn = st.download_button(
             "Press to Download",
-            df.to_excel(sheet_name='Aaref', index=False),
-            "Aaref.xlsx",
-            "xlsx/text/csv",
+            df.to_csv(index=False).encode("utf-8"),
+            "Aaref.csv",
+            "text/csv",
             key='download-csv')
-        
-
-
-
-
         
 
 
