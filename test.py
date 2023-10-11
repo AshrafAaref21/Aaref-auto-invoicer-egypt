@@ -125,8 +125,9 @@ if s_p == 'Procurements':
         st.divider()
         df_xlsx = to_excel(df)
         st.download_button(label='📥 Download Current Result',
-                                data=df_xlsx ,
-                                file_name= 'df_test.xlsx')
+                           data=df_xlsx ,
+                           file_name= 'df_test.xlsx',
+                           type="primary")
 
 elif s_p == 'Sales':
         
@@ -194,8 +195,9 @@ elif s_p == 'Sales':
         st.divider()
         df_xlsx = to_excel(df)
         st.download_button(label='📥 Download Current Result',
-                                data=df_xlsx ,
-                                file_name= 'df_test.xlsx')
+                           data=df_xlsx ,
+                           file_name= 'df_test.xlsx',
+                           type="primary")
         
 
 
