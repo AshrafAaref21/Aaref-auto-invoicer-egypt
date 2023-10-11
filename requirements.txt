@@ -4,5 +4,3 @@ openpyxl
 altair
 streamlit
 bs4
-XlsxWriter
-io
