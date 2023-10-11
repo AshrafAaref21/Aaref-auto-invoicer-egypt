@@ -5,5 +5,4 @@ altair
 streamlit
 bs4
 XlsxWriter
-pyxlsb
 io
