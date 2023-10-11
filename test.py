@@ -106,7 +106,7 @@ if s_p == 'Procurements':
             "Press to Download",
             df.to_excel(sheet_name='Aaref', index=False, encoding="windows-1256"),
             "Aaref.xlsx",
-            "text/csv/xlsx",
+            "xlsx/text/csv",
             key='download-csv')
         
 
@@ -181,7 +181,7 @@ elif s_p == 'Sales':
             "Press to Download",
             df.to_excel(sheet_name='Aaref', index=False, encoding="windows-1256"),
             "Aaref.xlsx",
-            "text/csv/xlsx",
+            "xlsx/text/csv",
             key='download-csv')
         
 
