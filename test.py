@@ -6,6 +6,8 @@ import json
 from bs4 import BeautifulSoup
 from io import BytesIO
 from pyxlsb import open_workbook as open_xlsb
+from json.decoder import JSONDecodeError
+import xmltojson
 
 
 img = Image.open("aaref.jpg")
@@ -57,9 +59,9 @@ if s_p == 'Procurements':
         for i in range(len(uploaded_files)):
 
             dic = {
-                    'Reciever ID': None,#data['receiverId'],
+                    'Issuer ID': None,#data['receiverId'],
                     'Internal ID': None,#data['internalId'],
-                    'Reciever Name': None,#u"{}".format(str(data['receiverName'])),
+                    'Issuer Name': None,#u"{}".format(str(data['receiverName'])),
                     'DateTime Issued': None,#data['dateTimeIssued'][:10] ,
                     'DateTime Received': None,#data['dateTimeReceived'][:10],
                     'Total Sales (EGP)': None,#data['totalSales'],
@@ -71,11 +73,13 @@ if s_p == 'Procurements':
             }
             
             bytes_data = uploaded_files[i].read()
+            # st.write("filename:", uploaded_file.name)
+            # st.write(bytes_data)
+            # f = open(bytes_data,encoding='utf-8')
             data = json.loads(bytes_data)
-
-            dic['Reciever ID'] = data['receiverId']
+            dic['Issuer ID'] = data['issuerId']
             dic['Internal ID'] = data['internalId']
-            dic['Reciever Name'] = u"{}".format(str(data['receiverName']))
+            dic['Issuer Name'] = u"{}".format(str(data['issuerName']))
             dic['DateTime Issued'] = data['dateTimeIssued'][:10]
             dic['DateTime Received'] = data['dateTimeReceived'][:10]
             dic['Total Sales (EGP)'] = data['totalSales']
@@ -93,22 +97,54 @@ if s_p == 'Procurements':
             
 
             except:
-                doc_data = json.loads(str(BeautifulSoup(data['document'], 'html.parser')))
+                try:
+                    doc_data = json.loads(data['document'])
+                except:
+                    doc_data = json.loads(xmltojson.parse(data['document']))['document']
 
                 dic['Total Items Discount (EGP)'] = doc_data['totalItemsDiscountAmount']
                 dic['Extra Invoice Discounts (EGP)'] =  doc_data['extraDiscountAmount']
 
                 try:
-                    dic['Value added tax (EGP)'] = doc_data['taxTotals'][0]['amount']
+                    if len(doc_data['taxTotals']) <= 1:
+                        dic['Value added tax (EGP)'] = doc_data['taxTotals'][0]['amount']
+                        
+                    else: 
+                        dic['Value added tax (EGP)'] = 0
+                        for i in range(len(doc_data['taxTotals'])) :
+                            dic['Value added tax (EGP)'] += float(doc_data['taxTotals'][i]['amount'])
+                                                    
                 except IndexError:
                     dic['Value added tax (EGP)'] = 0
-                # st.write(doc_data)
-                
 
-            ls = ls + [dic]
+                except:
+                    try:    
+                        # st.write(doc_data['taxTotals'])
+                        # if type()
+                        if type(doc_data['taxTotals']['taxTotal']) is list:
+
+                            if len(doc_data['taxTotals']['taxTotal']) == 1:
+                                dic['Value added tax (EGP)'] = float(doc_data['taxTotals']['taxTotal']['amount'])
+                                
+                            else:
+                                dic['Value added tax (EGP)'] = 0
+                                for i in range(len(doc_data['taxTotals']['taxTotal'])) :
+                                    dic['Value added tax (EGP)'] += float(doc_data['taxTotals']['taxTotal'][i]['amount'])
+
+                    except:
+                        st.error('There was an error, Please Contact me to solve it, ashrafaaref2020@gmail.com')
+                        
+                    
+            ls.append(dic)
 
 
         df = pd.DataFrame.from_dict(ls, orient='columns')
+        # btn = st.download_button(
+        #     "Press to Download",
+        #     df.to_csv(index=False,encoding="windows-1256"),
+        #     "Aaref.csv",
+        #     "text/csv",
+        #     key='download-csv')
         
         st.divider()
         df_xlsx = to_excel(df)
@@ -146,6 +182,9 @@ elif s_p == 'Sales':
             }
 
             bytes_data = uploaded_file.read()
+            # st.write("filename:", uploaded_file.name)
+            # st.write(bytes_data)
+            # f = open(bytes_data,encoding='utf-8')
             data = json.loads(bytes_data)
 
             dic['Reciever ID'] = data['receiverId']
@@ -186,3 +225,10 @@ elif s_p == 'Sales':
                                 file_name= r'EL Aaref.xlsx')
 
         
+
+
+
+
+        
+
+
