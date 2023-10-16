@@ -210,6 +210,7 @@ elif s_p == 'Sales':
 
             except:
                 st.error('Please Choose Procurements Type')
+                break
 
             
 
