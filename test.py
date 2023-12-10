@@ -188,7 +188,7 @@ elif s_p == 'Sales':
     
                 dic['Reciever ID'] = data['receiverId']
                 dic['Internal ID'] = data['internalId']
-                dic['Reciever Name'] = u"{}".format(str(data['receiverName']))
+                dic['Reciever Name'] = data['receiverName']
                 dic['DateTime Issued'] = data['dateTimeIssued'][:10]
                 dic['DateTime Received'] = data['dateTimeReceived'][:10]
                 dic['Total Sales (EGP)'] = data['totalSales']
