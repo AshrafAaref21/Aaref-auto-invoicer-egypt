@@ -10,7 +10,7 @@ from json.decoder import JSONDecodeError
 import xmltojson
 
 
-HtmlFile = open("ads.html", 'r', encoding='utf-8')
+HtmlFile = open("ads.html", 'rb', encoding='utf-8')
 source_code = HtmlFile.read()
 # print(source_code)
 st.components.v1.html(source_code, height=600)
