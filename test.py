@@ -19,12 +19,12 @@ st.components.v1.html(source_code, height=600)
 
 img = Image.open("aaref.jpg")
 
-st.set_page_config(
-    page_title="Auto Invoice",
-    page_icon=img,
-    layout="wide",
-    initial_sidebar_state="expanded",
-    )
+# st.set_page_config(
+#     page_title="Auto Invoice",
+#     page_icon=img,
+#     layout="wide",
+#     initial_sidebar_state="expanded",
+#     )
 
 
 # st.header('Egyptian Invoices Automation\nMade by Eng\\ ***Ashraf Aaref***')
