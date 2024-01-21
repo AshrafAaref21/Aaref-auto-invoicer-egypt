@@ -27,7 +27,7 @@ st.set_page_config(
     )
 
 
-st.header('Egyptian Invoices Automation\nMade by Eng\\ ***Ashraf Aaref***')
+# st.header('Egyptian Invoices Automation\nMade by Eng\\ ***Ashraf Aaref***')
 st.divider()
 
 
