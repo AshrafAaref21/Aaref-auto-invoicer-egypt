@@ -10,11 +10,11 @@ from json.decoder import JSONDecodeError
 import xmltojson
 
 
-HtmlFile = open("ads.html", 'r', encoding='utf-8')
-source_code = HtmlFile.read()
+with open("ads.html", 'r', encoding='utf-8') as HtmlFile :
+    source_code = HtmlFile.read()
 # print(source_code)
 st.header('Egyptian Invoices Automation\nMade by Eng\\ ***Ashraf Aaref***')
-st.components.v1.html(source_code, height=600)
+st.components.v1.html(source_code, height=300)
 
 
 
