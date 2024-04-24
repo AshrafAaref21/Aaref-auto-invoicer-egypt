@@ -19,13 +19,11 @@ st.set_page_config(
     initial_sidebar_state="expanded",
     )
 
-with open("ads.html", 'r', encoding='utf-8') as HtmlFile :
-    source_code = HtmlFile.read()
-# print(source_code)
-st.header('Egyptian Invoices Automation\nMade by Eng\\ ***Ashraf Aaref***')
-st.components.v1.html(source_code, height=300,unsafe_allow_html=True)
 
-
+st.markdown("""
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2626355719054575"
+ crossorigin="anonymous"></script>
+""", unsafe_allow_html=True)
 
 
 st.divider()
