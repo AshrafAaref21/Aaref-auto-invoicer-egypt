@@ -23,7 +23,7 @@ with open("ads.html", 'r', encoding='utf-8') as HtmlFile :
     source_code = HtmlFile.read()
 # print(source_code)
 st.header('Egyptian Invoices Automation\nMade by Eng\\ ***Ashraf Aaref***')
-st.components.v1.html(source_code, height=300)
+st.components.v1.html(source_code, height=300,unsafe_allow_html=True)
 
 
 
